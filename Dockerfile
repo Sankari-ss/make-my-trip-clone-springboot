@@ -1,4 +1,4 @@
-# Use an official Maven image with Java 17 for building
+# Use an official Maven image with Java 21 for building
 FROM maven:3.9.5-eclipse-temurin-17 AS build
 
 # Set the working directory inside the container
