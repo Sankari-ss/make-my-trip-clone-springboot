@@ -1,0 +1,213 @@
+import axios from "axios";
+
+const BACKEND_URL = "https://make-my-trip-clone-springboot-1-0tjo.onrender.com";
+
+export const login = async (email, password) => {
+  try {
+    const url = `${BACKEND_URL}/user/login?email=${email}&password=${password}`;
+    const res = await axios.post(url);
+    const data = res.data;
+    // console.log(data);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const signup = async (
+  firstName,
+  lastName,
+  email,
+  password,
+  phoneNumber
+) => {
+  try {
+    const res = await axios.post(`${BACKEND_URL}/user/signup`, {
+      firstName,
+      lastName,
+      email,
+      password,
+      phoneNumber,
+    });
+    const data = res.data;
+    // console.log(data);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getUserByEmail = async (email) => {
+  try {
+    const res = await axios.get(
+      `${BACKEND_URL}/user/byEmail?email=${encodeURIComponent(email)}`
+    );
+    return res.data;
+  } catch (error) {
+    if(error.response && error.response.status === 404){
+      throw new Error("User not found");
+    }
+    throw new Error("Server error");
+  }
+};
+
+export const editProfile = async (
+  id,
+  firstName,
+  lastName,
+  email,
+  phoneNumber
+) => {
+  try {
+    const res = await axios.put(`${BACKEND_URL}/user/edit/${id}`, {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+    });
+    const data = res.data;
+    return data;
+  } catch (error) {
+    console.error("Error editing profile:", error);
+    throw error;
+  }
+};
+export const getflight = async () => {
+  try {
+    const res = await axios.get(`${BACKEND_URL}/flight`);
+    const data = res.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const addflight = async (
+  flightName,
+  from,
+  to,
+  departureTime,
+  arrivalTime,
+  price,
+  availableSeats
+) => {
+  try {
+    const res = await axios.post(`${BACKEND_URL}/admin/flight`, {
+      flightName,
+      from,
+      to,
+      departureTime,
+      arrivalTime,
+      price,
+      availableSeats,
+    });
+    const data = res.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const editflight = async (
+  id,
+  flightName,
+  from,
+  to,
+  departureTime,
+  arrivalTime,
+  price,
+  availableSeats
+) => {
+  try {
+    const res = await axios.put(`${BACKEND_URL}/admin/flight/${id}`, {
+      flightName,
+      from,
+      to,
+      departureTime,
+      arrivalTime,
+      price,
+      availableSeats,
+    });
+    const data = res.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const gethotel = async () => {
+  try {
+    const res = await axios.get(`${BACKEND_URL}/hotel`);
+    const data = res.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const addhotel = async (
+  hotelName,
+  location,
+  pricePerNight,
+  availableRooms,
+  amenities
+) => {
+  try {
+    const res = await axios.post(`${BACKEND_URL}/admin/hotel`, {
+      hotelName,
+      location,
+      pricePerNight,
+      availableRooms,
+      amenities,
+    });
+    const data = res.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const edithotel = async (
+  id,
+  hotelName,
+  location,
+  pricePerNight,
+  availableRooms,
+  amenities
+) => {
+  try {
+    const res = await axios.put(`${BACKEND_URL}/admin/hotel/${id}`, {
+      hotelName,
+      location,
+      pricePerNight,
+      availableRooms,
+      amenities,
+    });
+    const data = res.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const handleFlightBooking = async (userId, flightId, seats, price) => {
+  try {
+    const url = `${BACKEND_URL}/booking/flight?userId=${userId}&flightId=${flightId}&seats=${seats}&price=${price}`;
+    const res = await axios.post(url);
+    const data = res.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const handleHotelBooking = async (userId, hotelId, rooms, price) => {
+  try {
+    const url = `${BACKEND_URL}/booking/hotel?userId=${userId}&hotelId=${hotelId}&rooms=${rooms}&price=${price}`;
+    const res = await axios.post(url);
+    const data = res.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
